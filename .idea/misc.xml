@@ -3,6 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_info_screen.xml" value="0.264" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_info_view.xml" value="0.2391304347826087" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_main.xml" value="0.24365942028985507" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/list_item_layout.xml" value="0.1" />
         <entry key="..\:/Files/Project/Breast cancer/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_main.xml" value="0.30932971014492755" />
         <entry key="..\:/TempFiles/temp-vs/andriod/BreastSymmetryEvaluation/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />
       </map>

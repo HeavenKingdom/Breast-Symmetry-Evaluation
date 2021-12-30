@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:minHeight="60dp"
+    >
+
+    <ImageView
+        android:id="@+id/user_avatar"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        />
+
+    <TextView
+        android:id="@+id/user_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@+id/user_avatar"
+        android:textColor="@color/blue"
+        />
+
+    <TextView
+        android:id="@+id/user_phone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/user_avatar"
+        android:layout_marginTop="10dp"
+        />
+
+    <ImageView
+        android:id="@+id/phone_icon"
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="10dp"
+        android:layout_toEndOf="@+id/user_phone"
+        android:autoLink = "phone"
+        />
+
+    <TextView
+        android:id="@+id/medical_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_alignParentRight="true"
+        />
+
+    <TextView
+        android:id="@+id/see_details"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/blue"
+        android:layout_below="@+id/medical_time"
+        android:layout_marginTop="10dp"
+        android:layout_alignParentRight="true"
+        />
+
+</RelativeLayout>

@@ -27,6 +27,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
+import Screen.InfoScreen;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -42,6 +44,9 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if(getSupportActionBar()!=null){
+            getSupportActionBar().hide();
+        }
         setContentView(R.layout.activity_main);
         //跳转相机动态权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -49,6 +54,15 @@ public class MainActivity extends AppCompatActivity {
             StrictMode.setVmPolicy(builder.build());
         }
         initView();
+        Button GoInfoScreen=(Button) findViewById(R.id.btn1);
+        GoInfoScreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i=new Intent();
+                i.setClass(MainActivity.this, InfoScreen.class);
+                startActivity(i);
+            }
+        });
     }
 
 
