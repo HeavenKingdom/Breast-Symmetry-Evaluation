@@ -2,6 +2,8 @@ package com.example.breast_symmetry_evaluation;
 
 import android.Manifest;
 import android.app.Activity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -14,8 +16,10 @@ import android.provider.MediaStore;
 
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -23,10 +27,20 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
+
+import com.ashokvarma.bottomnavigation.BottomNavigationBar;
+import com.ashokvarma.bottomnavigation.BottomNavigationItem;
+
 import java.io.File;
+import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.List;
 
+import Components.HomeFragment;
+import Components.InfoFragment;
+import Components.StartFragment;
 import Screen.InfoScreen;
 
 
@@ -37,6 +51,13 @@ public class MainActivity extends AppCompatActivity {
     private ImageView camereIv;
     private ImageView photoIv;
     private String TAG = "tag";
+
+    private BottomNavigationBar bottomNavigationBar;
+    private int lastSelectedPosition = 0;
+    private StartFragment startFragment;
+    private InfoFragment infoFragment;
+    private HomeFragment homeFragment;
+
     //需要的权限数组 读/写/相机
     private static String[] PERMISSIONS_STORAGE = {Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE,
@@ -44,39 +65,96 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if(getSupportActionBar()!=null){
+        //隐藏标题栏
+        if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
+        //隐藏状态栏
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
         setContentView(R.layout.activity_main);
         //跳转相机动态权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
             StrictMode.setVmPolicy(builder.build());
         }
-        initView();
-        Button GoInfoScreen=(Button) findViewById(R.id.btn1);
-        GoInfoScreen.setOnClickListener(new View.OnClickListener() {
+
+        bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
+        bottomNavigationBar
+                .setMode(BottomNavigationBar.MODE_FIXED)
+                .setBackgroundStyle(BottomNavigationBar.BACKGROUND_STYLE_STATIC)
+                .setActiveColor(R.color.black)
+                .setInActiveColor(R.color.black)
+                .setBarBackgroundColor(R.color.white);
+
+        bottomNavigationBar
+                .addItem(new BottomNavigationItem(R.drawable.main, "首页"))
+                .addItem(new BottomNavigationItem(R.drawable.info, "信息"))
+                .addItem(new BottomNavigationItem(R.drawable.home, "我的"))
+                .setFirstSelectedPosition(lastSelectedPosition)
+                .initialise();
+
+        bottomNavigationBar.setTabSelectedListener(new BottomNavigationBar.OnTabSelectedListener() {
             @Override
-            public void onClick(View view) {
-                Intent i=new Intent();
-                i.setClass(MainActivity.this, InfoScreen.class);
-                startActivity(i);
+            public void onTabSelected(int position) {
+                System.out.println("选择的item为" + position);
+                if (position==0){
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    startFragment = new StartFragment();
+                    transaction.replace(R.id.content, startFragment);
+                    transaction.commit();
+                }
+                else if (position == 1) {
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    infoFragment = new InfoFragment();
+                    transaction.replace(R.id.content, infoFragment);
+                    transaction.commit();
+                }
+                else if(position==2){
+                    FragmentManager fm = getSupportFragmentManager();
+                    FragmentTransaction transaction = fm.beginTransaction();
+                    homeFragment = new HomeFragment();
+                    transaction.replace(R.id.content, homeFragment);
+                    transaction.commit();
+                }
+            }
+
+            @Override
+            public void onTabUnselected(int position) {
+
+            }
+
+            @Override
+            public void onTabReselected(int position) {
+
             }
         });
+
+        setDefaultFragment();
+
+        //initView();
     }
 
+    private void setDefaultFragment() {
+        FragmentManager fm = getSupportFragmentManager();
+        FragmentTransaction transaction = fm.beginTransaction();
+        startFragment = new StartFragment();
+        transaction.replace(R.id.content, startFragment);
+        transaction.commit();
+
+    }
 
     private Uri ImageUri;
     public static final int TAKE_PHOTO = 101;
     public static final int TAKE_CAMARA = 100;
 
     private void initView() {
-        cameraBt = (Button) findViewById(R.id.camera_bt);
-        photoBt = (Button) findViewById(R.id.photo_bt);
-        camereIv = (ImageView) findViewById(R.id.camere_iv);
-        photoIv = (ImageView) findViewById(R.id.photo_iv);
+        TextView cameraArea=findViewById(R.id.camera_bt);
+        TextView photoArea=findViewById(R.id.photo_bt);
 
-        cameraBt.setOnClickListener(new View.OnClickListener() {
+        cameraArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //检查是否已经获得相机的权限
@@ -89,7 +167,7 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         });
-        photoBt.setOnClickListener(new View.OnClickListener() {
+        photoArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 toPicture();

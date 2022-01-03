@@ -3,9 +3,16 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/drawable-v24/shape.xml" value="0.14583333333333334" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/drawable/main_border_shape.xml" value="0.26979166666666665" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_info_screen.xml" value="0.264" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_info_view.xml" value="0.2391304347826087" />
-        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_main.xml" value="0.24365942028985507" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_tab_bar_control.xml" value="0.264" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/custom_title.xml" value="0.24954710144927536" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/fragment_info.xml" value="0.1" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/fragment_start.xml" value="0.264" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/list_item_layout.xml" value="0.1" />
         <entry key="..\:/Files/Project/Breast cancer/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_main.xml" value="0.30932971014492755" />
         <entry key="..\:/TempFiles/temp-vs/andriod/BreastSymmetryEvaluation/app/src/main/res/layout/activity_main.xml" value="0.1793478260869565" />

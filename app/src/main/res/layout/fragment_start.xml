@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="Components.StartFragment">
+    <!--布局区域-->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        tools:context=".MainActivity">
+        <!--Logo-->
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:layout_marginBottom="40dp"
+            android:src="@drawable/logo" />
+
+        <!--相机&相册选择区域-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/camera_bt"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:background="@drawable/main_border_shape"
+                android:gravity="center"
+                android:lineHeight="40dp"
+                android:text="拍照上传"
+                android:textSize="45dp" />
+
+            <TextView
+                android:id="@+id/photo_bt"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="60dp"
+                android:background="@drawable/main_border_shape"
+                android:gravity="center"
+                android:lineHeight="40dp"
+                android:text="相册选择"
+                android:textSize="45dp" />
+
+        </LinearLayout>
+        <!--相机&相册区域end-->
+    </LinearLayout>
+    <!--布局区域end-->
+</FrameLayout>
