@@ -37,7 +37,7 @@ public class InfoScreen extends AppCompatActivity {
             getSupportActionBar().hide();
         }
 
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_info_screen);
 

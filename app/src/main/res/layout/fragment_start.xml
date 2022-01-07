@@ -9,6 +9,10 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         tools:context=".MainActivity">
+        <ImageView
+            android:id="@+id/photoIv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
         <!--Logo-->
         <ImageView
             android:layout_width="match_parent"
@@ -48,6 +52,33 @@
 
         </LinearLayout>
         <!--相机&相册区域end-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
+            <ExpandableListView
+                android:id="@+id/help_list"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="40dp"
+                android:layout_weight="9"
+                android:background="@drawable/main_help_border"
+                android:groupIndicator="@null"
+                />
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.5" />
+
+        </LinearLayout>
+
     </LinearLayout>
     <!--布局区域end-->
 </FrameLayout>

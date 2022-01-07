@@ -1,9 +1,12 @@
 package com.example.breast_symmetry_evaluation;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
+
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
+
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -11,6 +14,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.StrictMode;
 import android.provider.MediaStore;
 
@@ -20,6 +24,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -34,9 +39,16 @@ import com.ashokvarma.bottomnavigation.BottomNavigationItem;
 import java.io.File;
 import java.io.FileDescriptor;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import android.text.format.DateFormat;
+
+import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
+import java.util.UUID;
 
 import Components.HomeFragment;
 import Components.InfoFragment;
@@ -70,14 +82,9 @@ public class MainActivity extends AppCompatActivity {
             getSupportActionBar().hide();
         }
         //隐藏状态栏
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        //getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
         setContentView(R.layout.activity_main);
-        //跳转相机动态权限
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            StrictMode.VmPolicy.Builder builder = new StrictMode.VmPolicy.Builder();
-            StrictMode.setVmPolicy(builder.build());
-        }
 
         bottomNavigationBar = (BottomNavigationBar) findViewById(R.id.bottom_navigation_bar);
         bottomNavigationBar
@@ -98,21 +105,19 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onTabSelected(int position) {
                 System.out.println("选择的item为" + position);
-                if (position==0){
+                if (position == 0) {
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
                     startFragment = new StartFragment();
                     transaction.replace(R.id.content, startFragment);
                     transaction.commit();
-                }
-                else if (position == 1) {
+                } else if (position == 1) {
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
                     infoFragment = new InfoFragment();
                     transaction.replace(R.id.content, infoFragment);
                     transaction.commit();
-                }
-                else if(position==2){
+                } else if (position == 2) {
                     FragmentManager fm = getSupportFragmentManager();
                     FragmentTransaction transaction = fm.beginTransaction();
                     homeFragment = new HomeFragment();
@@ -151,40 +156,68 @@ public class MainActivity extends AppCompatActivity {
     public static final int TAKE_CAMARA = 100;
 
     private void initView() {
-        TextView cameraArea=findViewById(R.id.camera_bt);
-        TextView photoArea=findViewById(R.id.photo_bt);
+        TextView cameraArea = findViewById(R.id.camera_bt);
+        TextView photoArea = findViewById(R.id.photo_bt);
 
         cameraArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 //检查是否已经获得相机的权限
-                if (verifyPermissions(MainActivity.this, PERMISSIONS_STORAGE[2]) == 0) {
+                /*if (verifyPermissions(MainActivity.this, PERMISSIONS_STORAGE[2]) == 0) {
                     Log.i(TAG, "提示是否要授权");
                     ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_STORAGE, 3);
                 } else {
                     //已经有权限
                     toCamera();  //打开相机
-                }
+                }*/
             }
         });
         photoArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                toPicture();
+                /*toPicture();*/
             }
         });
     }
 
+    @SuppressLint("SdCardPath")
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        //Toast.makeText(this, "相册选择返回", Toast.LENGTH_LONG).show();
         switch (requestCode) {
             case TAKE_PHOTO:
                 if (resultCode == RESULT_OK) {
                     try {
                         //将拍摄的照片显示出来
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(ImageUri));
-                        camereIv.setImageBitmap(bitmap);
+
+
+                        String photoDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/breast/symmetry/Evaluation/";
+                        System.out.println(photoDir);
+                        //获取内部存储状态
+                        String state = Environment.getExternalStorageState();
+                        //如果状态不是mounted，无法读写
+                        if (!state.equals(Environment.MEDIA_MOUNTED)) {
+                            return;
+                        }
+                        //通过UUID生成字符串文件名
+                        String fileName1 = UUID.randomUUID().toString();
+                        try {
+                            File file = new File(photoDir + fileName1 + ".jpg");
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                            out.flush();
+                            out.close();
+                            //保存图片后发送广播通知更新数据库
+                            Uri uri = Uri.fromFile(file);
+                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+                            Toast.makeText(this, "拍照结果保存成功", Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        //camereIv.setImageBitmap(bitmap);
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -196,7 +229,33 @@ public class MainActivity extends AppCompatActivity {
                         //将相册的照片显示出来
                         Uri uri_photo = data.getData();
                         Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(uri_photo));
-                        photoIv.setImageBitmap(bitmap);
+                        //photoIv.setImageBitmap(bitmap);
+
+                        String photoDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/breast/symmetry/Evaluation/";
+                        System.out.println(photoDir);
+                        //获取内部存储状态
+                        String state = Environment.getExternalStorageState();
+                        //如果状态不是mounted，无法读写
+                        if (!state.equals(Environment.MEDIA_MOUNTED)) {
+                            System.out.println("无法存储");
+                            return;
+                        }
+                        //通过UUID生成字符串文件名
+                        String fileName1 = UUID.randomUUID().toString();
+                        try {
+                            File file = new File(photoDir + fileName1 + ".jpg");
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                            out.flush();
+                            out.close();
+                            //保存图片后发送广播通知更新数据库
+                            Uri uri = Uri.fromFile(file);
+                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+                            Toast.makeText(this, "拍照结果保存成功", Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
@@ -205,6 +264,7 @@ public class MainActivity extends AppCompatActivity {
             default:
                 break;
         }
+
     }
 
 
@@ -230,7 +290,7 @@ public class MainActivity extends AppCompatActivity {
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         if (grantResults != null && grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
             Log.i(TAG, "用户授权");
-            toCamera();
+            //toCamera();
         } else {
             Log.i(TAG, "用户未授权");
         }
