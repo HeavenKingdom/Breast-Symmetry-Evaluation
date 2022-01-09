@@ -1,12 +1,18 @@
 package Components;
 
+import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.breast_symmetry_evaluation.R;
 
@@ -63,4 +69,52 @@ public class HomeFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false);
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        initView();
+    }
+
+    /*
+    * 初始化页面组件
+    * */
+    private void initView() {
+        LinearLayout accountInfo=getActivity().findViewById(R.id.account_info);
+        LinearLayout accountSecurity=getActivity().findViewById(R.id.account_security);
+        LinearLayout serviceAgreement=getActivity().findViewById(R.id.service_agreement);
+        LinearLayout privacyStatement=getActivity().findViewById(R.id.privacy_statement);
+
+        TextView accountName=getActivity().findViewById(R.id.account_name);
+        accountName.setText("未登录sjknbjvbrvjhbdjhvbjdhbv");
+
+        accountInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("登录注册");
+            }
+        });
+
+        accountSecurity.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("修改密码");
+            }
+        });
+
+        serviceAgreement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("服务协议");
+            }
+        });
+
+        privacyStatement.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("隐私政策声明");
+            }
+        });
+    }
+
 }

@@ -15,6 +15,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BreastSymmetryEvaluation">
         <activity
+            android:name=".Camera.CameraActivity"
+            android:exported="true" />
+        <activity
             android:name="Screen.InfoScreen"
             android:exported="true" />
 

@@ -6,6 +6,8 @@
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/drawable-v24/main_help_border.xml" value="0.28229166666666666" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/drawable-v24/shape.xml" value="0.14583333333333334" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/drawable/main_border_shape.xml" value="0.26979166666666665" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_camera.xml" value="0.21603260869565216" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_custom_camera.xml" value="0.2210144927536232" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_info_screen.xml" value="0.264" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_info_view.xml" value="0.2391304347826087" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_main.xml" value="0.264" />
@@ -13,7 +15,7 @@
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/custom_title.xml" value="0.24954710144927536" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/expand_child.xml" value="0.2390625" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/expand_group.xml" value="0.2390625" />
-        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/fragment_home.xml" value="0.1" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/fragment_home.xml" value="0.264" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/fragment_info.xml" value="0.1" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/fragment_start.xml" value="0.264" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/list_item_layout.xml" value="0.1" />

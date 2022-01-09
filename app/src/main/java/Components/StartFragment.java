@@ -1,32 +1,23 @@
 package Components;
 
 import static com.example.breast_symmetry_evaluation.MainActivity.TAKE_CAMARA;
-import static com.example.breast_symmetry_evaluation.MainActivity.TAKE_PHOTO;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import android.provider.MediaStore;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ExpandableListAdapter;
 import android.widget.ExpandableListView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.breast_symmetry_evaluation.MainActivity;
 import com.example.breast_symmetry_evaluation.R;
 
 import Screen.HelpAdapter;
@@ -135,13 +126,17 @@ public class StartFragment extends Fragment {
                 System.out.println("点击拍照");
 
                 //申请相机动态权限
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                }
+                }*/
 
-                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                /*Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(intent, TAKE_PHOTO);
+                startActivityForResult(intent, TAKE_PHOTO);*/
+                /*Intent intent=new Intent(getActivity(), CustomCamera.class);
+                startActivity(intent);*/
+                Intent intent=new Intent("com.example.breast_symmetry_evaluation.Camera.CameraActivity");
+                startActivity(intent);
             }
         });
         photoArea.setOnClickListener(new View.OnClickListener() {
