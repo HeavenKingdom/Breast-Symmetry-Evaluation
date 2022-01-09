@@ -65,6 +65,7 @@ import com.example.breast_symmetry_evaluation.R;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -263,7 +264,21 @@ public class Camera2BasicFragment extends Fragment
 
         @Override
         public void onImageAvailable(ImageReader reader) {
+            Toast.makeText(getActivity(), "获取结果", Toast.LENGTH_LONG).show();
             mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
+            try {
+                Image image=reader.acquireNextImage();
+                ByteBuffer buffer=image.getPlanes()[0].getBuffer();
+                int length= buffer.remaining();
+                byte[] bytes= new byte[length];
+            }catch (Exception e){
+                System.out.println("获取图片异常");
+            }
+
+            /*buffer.get(bytes);
+            image.close();
+            System.out.println("照片拍好");
+            System.out.println("666:"+buffer);*/
         }
 
     };
@@ -309,6 +324,8 @@ public class Camera2BasicFragment extends Fragment
         private void process(CaptureResult result) {
             switch (mState) {
                 case STATE_PREVIEW: {
+                    System.out.println(result);
+                    System.out.println("预览状态");
                     // We have nothing to do when the camera preview is working normally.
                     break;
                 }
@@ -365,6 +382,8 @@ public class Camera2BasicFragment extends Fragment
                                        @NonNull TotalCaptureResult result) {
             process(result);
         }
+
+
 
     };
 
@@ -454,7 +473,10 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        mFile = new File(getActivity().getExternalFilesDir(null), "pic.jpg");
+        System.out.println("开始创建文件");
+        System.out.println(getActivity().getExternalFilesDir(null)+"/pi2.jpg");
+        mFile = new File(getActivity().getExternalFilesDir(null), "/123pic.jpg");
+        System.out.println("创建文件成功");
     }
 
     @Override
@@ -915,6 +937,7 @@ public class Camera2BasicFragment extends Fragment
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.picture: {
+                System.out.println("开始拍照");
                 takePicture();
                 break;
             }
@@ -978,6 +1001,7 @@ public class Camera2BasicFragment extends Fragment
                     }
                 }
             }
+
         }
 
     }

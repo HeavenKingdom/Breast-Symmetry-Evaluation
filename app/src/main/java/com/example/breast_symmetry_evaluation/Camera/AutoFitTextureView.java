@@ -18,7 +18,9 @@ package com.example.breast_symmetry_evaluation.Camera;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
 import android.view.TextureView;
+import android.view.WindowManager;
 
 /**
  * A {@link TextureView} that can be adjusted to a specified aspect ratio.
@@ -61,17 +63,27 @@ public class AutoFitTextureView extends TextureView {
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
-        int width = MeasureSpec.getSize(widthMeasureSpec);
+
+        DisplayMetrics dm2 = getResources().getDisplayMetrics();
+        System.out.println("heigth2 : " + dm2.heightPixels);
+        System.out.println("width2 : " + dm2.widthPixels);
+
+        int width=dm2.heightPixels;
+        int height=dm2.widthPixels;
+        System.out.println(width+"..."+height);
+        setMeasuredDimension(widthMeasureSpec,heightMeasureSpec);
+        //setMeasuredDimension(height,width);
+        /*int width = MeasureSpec.getSize(widthMeasureSpec);
         int height = MeasureSpec.getSize(heightMeasureSpec);
         if (0 == mRatioWidth || 0 == mRatioHeight) {
             setMeasuredDimension(width, height);
         } else {
             if (width < height * mRatioWidth / mRatioHeight) {
-                setMeasuredDimension(width, width * mRatioHeight / mRatioWidth);
+                setMeasuredDimension(width * mRatioHeight / mRatioWidth,width );
             } else {
-                setMeasuredDimension(height * mRatioWidth / mRatioHeight, height);
+                setMeasuredDimension(height,height * mRatioWidth / mRatioHeight );
             }
-        }
+        }*/
     }
 
 }

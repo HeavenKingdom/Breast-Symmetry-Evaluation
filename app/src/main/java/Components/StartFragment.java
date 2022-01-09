@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
+import com.example.breast_symmetry_evaluation.Camera.CameraActivity;
 import com.example.breast_symmetry_evaluation.R;
 
 import Screen.HelpAdapter;
@@ -125,17 +126,7 @@ public class StartFragment extends Fragment {
                 }*/
                 System.out.println("点击拍照");
 
-                //申请相机动态权限
-                /*if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                }*/
-
-                /*Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT, imageUri);
-                startActivityForResult(intent, TAKE_PHOTO);*/
-                /*Intent intent=new Intent(getActivity(), CustomCamera.class);
-                startActivity(intent);*/
-                Intent intent=new Intent("com.example.breast_symmetry_evaluation.Camera.CameraActivity");
+                Intent intent=new Intent(getActivity(), CameraActivity.class);
                 startActivity(intent);
             }
         });
