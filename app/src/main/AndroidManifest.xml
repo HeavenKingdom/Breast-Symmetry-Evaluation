@@ -3,7 +3,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.breast_symmetry_evaluation">
 
-    <uses-permission android:name="android.permission.CAMERA" /> <!-- 读写 -->
+    <!-- Network Permission -->
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <!-- Camera Permission -->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!-- Read and Write Permission -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.PERMISSIONS_STORAGE" />
 
