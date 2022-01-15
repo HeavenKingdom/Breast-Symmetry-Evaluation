@@ -1,109 +1,90 @@
-<?xml version="1.0" encoding="utf-8"?>
-
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
 
-    <data>
-
-        <import type="Screen.ListItem" />
-
-        <variable
-            name="patientOverview"
-            type="ListItem" />
-
-    </data>
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center"
+        android:text="信息"
+        android:textStyle="bold" />
+    <!--搜索框区域-->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        tools:context=".InfoScreen">
+        android:layout_height="50dp"
+        android:layout_gravity="center_vertical"
+        android:background="@color/pure">
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="信息"
-            android:textStyle="bold" />
-        <!--搜索框区域-->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center_vertical"
-            android:background="@color/pure">
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25" />
 
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25" />
+            <SearchView
+                android:id="@+id/search_content"
+                android:layout_width="0dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="9.5"
+                android:background="@drawable/shape"
+                android:iconifiedByDefault="false"
+                android:queryHint="请输入患者姓名" />
 
-                <SearchView
-                    android:id="@+id/search_content"
-                    android:layout_width="0dp"
-                    android:layout_height="32dp"
-                    android:layout_gravity="center_vertical"
-                    android:layout_weight="9.5"
-                    android:background="@drawable/shape"
-                    android:iconifiedByDefault="false"
-                    android:queryHint="请输入患者姓名"
-                    />
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.25" />
-
-            </LinearLayout>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.25" />
 
         </LinearLayout>
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/tab_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:tabGravity="fill"
-            app:tabIndicatorColor="@color/blue"
-            app:tabIndicatorFullWidth="false"
-            app:tabIndicatorHeight="3dp"
-            app:tabMaxWidth="0dp"
-            app:tabSelectedTextColor="@color/blue"
-            app:tabTextColor="@color/blue">
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItemToDeal"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="待跟进" />
-
-            <com.google.android.material.tabs.TabItem
-                android:id="@+id/tabItemShowAll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="全部" />
-
-        </com.google.android.material.tabs.TabLayout>
-
-        <ListView
-            android:id="@+id/list_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-
-
-        <!--<androidx.viewpager.widget.ViewPager
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_below="@id/tab_layout">
-
-
-
-        </androidx.viewpager.widget.ViewPager>-->
-
     </LinearLayout>
 
-</layout>
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/tab_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:tabGravity="fill"
+        app:tabIndicatorColor="@color/blue"
+        app:tabIndicatorFullWidth="false"
+        app:tabIndicatorHeight="3dp"
+        app:tabMaxWidth="0dp"
+        app:tabSelectedTextColor="@color/blue"
+        app:tabTextColor="@color/blue">
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemToDeal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="待跟进" />
+
+        <com.google.android.material.tabs.TabItem
+            android:id="@+id/tabItemShowAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="全部" />
+
+    </com.google.android.material.tabs.TabLayout>
+
+    <ListView
+        android:id="@+id/list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" />
+
+
+    <!--<androidx.viewpager.widget.ViewPager
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/tab_layout">
+
+
+
+    </androidx.viewpager.widget.ViewPager>-->
+
+</LinearLayout>

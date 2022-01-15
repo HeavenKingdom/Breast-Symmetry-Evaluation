@@ -1,4 +1,4 @@
-package Screen;
+package com.example.breast_symmetry_evaluation.Adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;

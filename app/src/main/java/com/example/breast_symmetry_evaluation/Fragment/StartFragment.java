@@ -1,14 +1,16 @@
-package Components;
+package com.example.breast_symmetry_evaluation.Fragment;
 
 import static com.example.breast_symmetry_evaluation.MainActivity.TAKE_CAMARA;
+import static com.example.breast_symmetry_evaluation.MainActivity.TAKE_PHOTO;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -17,11 +19,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.breast_symmetry_evaluation.Camera.CameraActivity;
+import com.example.breast_symmetry_evaluation.MainActivity;
 import com.example.breast_symmetry_evaluation.R;
 
-import Screen.HelpAdapter;
+import com.example.breast_symmetry_evaluation.Adapter.HelpAdapter;
+import com.example.breast_symmetry_evaluation.Screen.ImagePreviewScreen;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileNotFoundException;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -34,6 +42,7 @@ public class StartFragment extends Fragment {
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
+    private static final int RESULT_OK = -1;
 
     // TODO: Rename and change types of parameters
     private String mParam1;
@@ -93,6 +102,77 @@ public class StartFragment extends Fragment {
         initHelpList();
     }
 
+    @SuppressLint("SdCardPath")
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Toast.makeText(getActivity(), "相册选择返回", Toast.LENGTH_LONG).show();
+        switch (requestCode) {
+            case TAKE_PHOTO:
+                if (resultCode == RESULT_OK) {
+                    /*try {
+                        //将拍摄的照片显示出来
+                        Bitmap bitmap = BitmapFactory.decodeStream(getContentResolver().openInputStream(ImageUri));
+
+
+                        String photoDir = Environment.getExternalStorageDirectory().getAbsolutePath() + "/breast/symmetry/Evaluation/";
+                        System.out.println(photoDir);
+                        //获取内部存储状态
+                        String state = Environment.getExternalStorageState();
+                        //如果状态不是mounted，无法读写
+                        if (!state.equals(Environment.MEDIA_MOUNTED)) {
+                            return;
+                        }
+                        //通过UUID生成字符串文件名
+                        String fileName1 = UUID.randomUUID().toString();
+                        try {
+                            File file = new File(photoDir + fileName1 + ".jpg");
+                            FileOutputStream out = new FileOutputStream(file);
+                            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, out);
+                            out.flush();
+                            out.close();
+                            //保存图片后发送广播通知更新数据库
+                            Uri uri = Uri.fromFile(file);
+                            sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+                            Toast.makeText(this, "拍照结果保存成功", Toast.LENGTH_LONG).show();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        //camereIv.setImageBitmap(bitmap);
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }*/
+                }
+                break;
+            case 100:
+                System.out.println("相册选择");
+                if (resultCode == RESULT_OK) {
+                    System.out.println("相册选择");
+                    try {
+                        //将相册的照片显示出来
+                        Uri uri_photo = data.getData();
+                        Bitmap bitmap = BitmapFactory.decodeStream(getActivity().getContentResolver().openInputStream(uri_photo));
+
+                        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                        bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+                        byte[] imageFile=outputStream.toByteArray();
+
+                        Intent intent=new Intent(getContext(), ImagePreviewScreen.class);
+                        intent.putExtra("image",imageFile);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+
+                    } catch (FileNotFoundException e) {
+                        e.printStackTrace();
+                    }
+                }
+                break;
+            default:
+                break;
+        }
+    }
+
 
 
     /*
@@ -116,18 +196,12 @@ public class StartFragment extends Fragment {
         cameraArea.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //检查是否已经获得相机的权限
-                /*if (verifyPermissions(MainActivity.this, PERMISSIONS_STORAGE[2]) == 0) {
-                    Log.i(TAG, "提示是否要授权");
-                    ActivityCompat.requestPermissions(MainActivity.this, PERMISSIONS_STORAGE, 3);
-                } else {
-                    //已经有权限
-                    toCamera();  //打开相机
-                }*/
-                System.out.println("点击拍照");
+                /*System.out.println("点击拍照");*/
 
                 Intent intent=new Intent(getActivity(), CameraActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 startActivity(intent);
+
             }
         });
         photoArea.setOnClickListener(new View.OnClickListener() {
@@ -137,7 +211,9 @@ public class StartFragment extends Fragment {
                 System.out.println("相册");
                 Intent intent = new Intent(Intent.ACTION_PICK);  //跳转到 ACTION_IMAGE_CAPTURE
                 intent.setType("image/*");
-                startActivityForResult(intent, TAKE_CAMARA);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                startActivityForResult(intent,100);
+
                 Log.i("TAG", "跳转相册成功");
             }
         });

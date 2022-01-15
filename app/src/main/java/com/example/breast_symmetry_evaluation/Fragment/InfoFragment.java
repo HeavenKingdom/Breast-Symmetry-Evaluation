@@ -1,4 +1,4 @@
-package Components;
+package com.example.breast_symmetry_evaluation.Fragment;
 
 import android.os.Bundle;
 
@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import Screen.InfoAdapter;
+import com.example.breast_symmetry_evaluation.Adapter.InfoAdapter;
 
 /**
  * A simple {@link Fragment} subclass.

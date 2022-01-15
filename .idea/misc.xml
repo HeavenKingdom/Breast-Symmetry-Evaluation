@@ -9,8 +9,10 @@
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/drawable/ic_launcher_background.xml" value="0.26979166666666665" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/drawable/main_border_shape.xml" value="0.26979166666666665" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/drawable/main_help_indicator.xml" value="0.26979166666666665" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/drawable/upload_style.xml" value="0.26979166666666665" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_camera.xml" value="0.264" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_custom_camera.xml" value="0.2210144927536232" />
+        <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_image_preview_screen.xml" value="0.264" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_info_screen.xml" value="0.264" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_info_view.xml" value="0.2391304347826087" />
         <entry key="..\:/Android/Breast-Symmetry-Evaluation/app/src/main/res/layout/activity_main.xml" value="0.264" />

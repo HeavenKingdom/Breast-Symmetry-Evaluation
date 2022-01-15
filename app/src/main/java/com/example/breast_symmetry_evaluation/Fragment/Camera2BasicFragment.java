@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.example.breast_symmetry_evaluation.Camera;
+package com.example.breast_symmetry_evaluation.Fragment;
 
 import android.Manifest;
 import android.app.Activity;
@@ -22,6 +22,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.graphics.ImageFormat;
@@ -60,18 +61,20 @@ import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
+import com.example.breast_symmetry_evaluation.Camera.AutoFitTextureView;
+import com.example.breast_symmetry_evaluation.MainActivity;
 import com.example.breast_symmetry_evaluation.R;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.nio.Buffer;
 import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.Semaphore;
 import java.util.concurrent.TimeUnit;
 
@@ -256,6 +259,7 @@ public class Camera2BasicFragment extends Fragment
     private File mFile;
 
     /**
+     * 照片存储的回调函数 存储完成后回主页面
      * This a callback object for the {@link ImageReader}. "onImageAvailable" will be called when a
      * still image is ready to be saved.
      */
@@ -264,21 +268,12 @@ public class Camera2BasicFragment extends Fragment
 
         @Override
         public void onImageAvailable(ImageReader reader) {
-            Toast.makeText(getActivity(), "获取结果", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity(), "获取结果", Toast.LENGTH_LONG).show();
             mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
-            try {
-                Image image=reader.acquireNextImage();
-                ByteBuffer buffer=image.getPlanes()[0].getBuffer();
-                int length= buffer.remaining();
-                byte[] bytes= new byte[length];
-            }catch (Exception e){
-                System.out.println("获取图片异常");
-            }
 
-            /*buffer.get(bytes);
-            image.close();
-            System.out.println("照片拍好");
-            System.out.println("666:"+buffer);*/
+            Intent intent=new Intent(getContext(),MainActivity.class);
+            startActivity(intent);
+
         }
 
     };
@@ -324,8 +319,6 @@ public class Camera2BasicFragment extends Fragment
         private void process(CaptureResult result) {
             switch (mState) {
                 case STATE_PREVIEW: {
-                    System.out.println(result);
-                    System.out.println("预览状态");
                     // We have nothing to do when the camera preview is working normally.
                     break;
                 }
@@ -466,7 +459,7 @@ public class Camera2BasicFragment extends Fragment
     @Override
     public void onViewCreated(final View view, Bundle savedInstanceState) {
         view.findViewById(R.id.picture).setOnClickListener(this);
-        view.findViewById(R.id.info).setOnClickListener(this);
+        view.findViewById(R.id.back).setOnClickListener(this);
         mTextureView = (AutoFitTextureView) view.findViewById(R.id.texture);
     }
 
@@ -474,8 +467,11 @@ public class Camera2BasicFragment extends Fragment
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         System.out.println("开始创建文件");
+
         System.out.println(getActivity().getExternalFilesDir(null)+"/pi2.jpg");
-        mFile = new File(getActivity().getExternalFilesDir(null), "/123pic.jpg");
+        String uuid=UUID.randomUUID().toString();
+
+        mFile = new File(getActivity().getExternalFilesDir(null), "/"+uuid+".jpg");
         System.out.println("创建文件成功");
     }
 
@@ -521,8 +517,10 @@ public class Camera2BasicFragment extends Fragment
                                            @NonNull int[] grantResults) {
         if (requestCode == REQUEST_CAMERA_PERMISSION) {
             if (grantResults.length != 1 || grantResults[0] != PackageManager.PERMISSION_GRANTED) {
-                ErrorDialog.newInstance(getString(R.string.request_permission))
-                        .show(getChildFragmentManager(), FRAGMENT_DIALOG);
+                System.out.println("未授予权限");
+                /*ErrorDialog.newInstance(getString(R.string.request_permission))
+                        .show(getChildFragmentManager(), FRAGMENT_DIALOG);*/
+
             }
         } else {
             super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -884,7 +882,7 @@ public class Camera2BasicFragment extends Fragment
                 public void onCaptureCompleted(@NonNull CameraCaptureSession session,
                                                @NonNull CaptureRequest request,
                                                @NonNull TotalCaptureResult result) {
-                    showToast("Saved: " + mFile);
+                    //showToast("Saved: " + mFile);
                     Log.d(TAG, mFile.toString());
                     unlockFocus();
                 }
@@ -939,18 +937,27 @@ public class Camera2BasicFragment extends Fragment
             case R.id.picture: {
                 System.out.println("开始拍照");
                 takePicture();
+
                 break;
             }
-            case R.id.info: {
-                Activity activity = getActivity();
+            case R.id.back: {
+                /*Activity activity = getActivity();
                 if (null != activity) {
                     new AlertDialog.Builder(activity)
                             .setMessage(R.string.intro_message)
                             .setPositiveButton(android.R.string.ok, null)
                             .show();
-                }
+                }*/
+                Intent intent=new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
                 break;
             }
+            /*case R.id.photo_back:{
+                System.out.println("返回");
+                Intent intent=new Intent(getContext(), MainActivity.class);
+                startActivity(intent);
+                break;
+            }*/
         }
     }
 

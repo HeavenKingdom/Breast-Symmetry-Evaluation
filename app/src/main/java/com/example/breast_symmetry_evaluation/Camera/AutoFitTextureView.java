@@ -67,21 +67,27 @@ public class AutoFitTextureView extends TextureView {
         DisplayMetrics dm2 = getResources().getDisplayMetrics();
         System.out.println("heigth2 : " + dm2.heightPixels);
         System.out.println("width2 : " + dm2.widthPixels);
+        setMeasuredDimension(dm2.widthPixels,dm2.heightPixels);
 
-        int width=dm2.heightPixels;
+
+        /*int width=dm2.heightPixels;
         int height=dm2.widthPixels;
         System.out.println(width+"..."+height);
-        setMeasuredDimension(widthMeasureSpec,heightMeasureSpec);
+        setMeasuredDimension(widthMeasureSpec,heightMeasureSpec);*/
         //setMeasuredDimension(height,width);
         /*int width = MeasureSpec.getSize(widthMeasureSpec);
-        int height = MeasureSpec.getSize(heightMeasureSpec);
-        if (0 == mRatioWidth || 0 == mRatioHeight) {
+        int height = MeasureSpec.getSize(heightMeasureSpec);*/
+        /*int heightPixels=dm2.heightPixels;
+        int widthPixels=dm2.widthPixels;*/
+        //setMeasuredDimension(widthPixels,(int)bute*widthPixels);
+
+        /*if (0 == mRatioWidth || 0 == mRatioHeight) {
             setMeasuredDimension(width, height);
         } else {
             if (width < height * mRatioWidth / mRatioHeight) {
-                setMeasuredDimension(width * mRatioHeight / mRatioWidth,width );
+                setMeasuredDimension((int) (width * bute),width );
             } else {
-                setMeasuredDimension(height,height * mRatioWidth / mRatioHeight );
+                setMeasuredDimension(height,(int) (width / bute) );
             }
         }*/
     }

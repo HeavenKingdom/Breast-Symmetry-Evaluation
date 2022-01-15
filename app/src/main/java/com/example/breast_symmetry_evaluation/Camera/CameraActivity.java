@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.WindowManager;
 
+import com.example.breast_symmetry_evaluation.Fragment.Camera2BasicFragment;
 import com.example.breast_symmetry_evaluation.R;
 
 public class CameraActivity extends AppCompatActivity {
