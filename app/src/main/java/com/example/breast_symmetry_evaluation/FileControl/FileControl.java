@@ -33,8 +33,6 @@ import okhttp3.Response;
  */
 
 public class FileControl {
-    // Define pic cache dir
-    private static  String picUri = Environment.getExternalStorageDirectory() + "/temp.png";
 
     // Define server url
     private static String localhost = "http://192.168.247.1:8081/";
@@ -52,68 +50,43 @@ public class FileControl {
 
     public FileControl(){}
 
-    /**
-     *  OPEN INTERFACE FOR REQUEST
+    /*
+     ****************************************************************
+     *                  OPEN INTERFACE FOR REQUEST
+     ****************************************************************
      */
 
+    /**
+     *  Get all the data from server
+     */
     public void reqAllData(){
         asyncGetData((localhost + getAllData));
     }
 
+    /**
+     *  Get specific data by posting id
+     *
+     * @param id
+     */
     public void reqSpcData(String id){
         asyncPostData((localhost + getSpcData), id);
     }
 
+    /**
+     *  Post images to server by passing picture url
+     *
+     * @param picUrl
+     */
     public void reqUpdImg(String picUrl){
         uploadImg((localhost + postImg),picUrl);
     }
 
 
-
-    /**
-     * Convert bitmap to file and return path
-
-     *
-     * @param bitmap
-     * @return tmpUri
+    /*
+     ****************************************************************
+     *                     PRIVATE FUNCTION
+     ****************************************************************
      */
-    private String getCurImg(Bitmap bitmap){
-        String tmpUri = "";
-        try {
-            // Create Byte stream for write file
-            ByteArrayOutputStream baos = new ByteArrayOutputStream();
-
-            // Convert bitmap to Byte stream
-            bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-
-            // Get a folder to store our file
-            tmpUri = Environment.getExternalStorageDirectory() + "/temp.png";
-            File file = new File(tmpUri);
-
-            try {
-                file.createNewFile();
-
-                // Convert Byte stream to Byte[]
-                byte[] bitmapdata = baos.toByteArray();
-
-                // Write into our created file
-                FileOutputStream fos = new FileOutputStream(file);
-                fos.write(bitmapdata);
-
-                fos.flush();
-                fos.close();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        Log.v("tmpUri", tmpUri);
-
-        return tmpUri;
-    }
-
 
     /**
      * Upload images to the server
