@@ -3,9 +3,16 @@ package com.example.breast_symmetry_evaluation.Screen;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.breast_symmetry_evaluation.FileControl.FileControl;
 import com.example.breast_symmetry_evaluation.R;
 
 import java.io.File;
@@ -19,7 +26,7 @@ public class ImagePreviewScreen extends AppCompatActivity {
     /**
      * 图片文件
      */
-    private byte[] imageFile;
+    private Bitmap imageFile;
 
     /**
      * 图片存储路径
@@ -29,51 +36,51 @@ public class ImagePreviewScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_image_preview_screen);
-
         //隐藏标题栏
         if (getSupportActionBar() != null) {
             getSupportActionBar().hide();
         }
         //隐藏状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_image_preview_screen);
 
-        getImageFile();
-        saveImageFile();
-
+        readFile();
+        initAction();
     }
 
     /**
-     * 存储图片文件
+     * 初始化动作
      */
-    private void saveImageFile() {
-        String uuid = UUID.randomUUID().toString();
-        imagePath = getExternalFilesDir(null) + "/" + uuid + ".jpg";
-        System.out.println(imagePath);
-
-        File tempFile = new File(imagePath);
-        FileOutputStream outputStream = null;
-        try {
-            outputStream = new FileOutputStream(tempFile);
-            outputStream.write(imageFile);
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (null != outputStream) {
-                try {
-                    outputStream.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+    private void initAction() {
+        ImageView cancelUpLoad=(ImageView) findViewById(R.id.cancel_upload);
+        cancelUpLoad.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                System.out.println("取消上传");
             }
-        }
+        });
+
+        TextView upLoadImage=(TextView) findViewById(R.id.upload_image);
+        upLoadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FileControl fileControl=new FileControl();
+                fileControl.reqUpdImg(imagePath);
+            }
+        });
+
     }
 
     /**
-     * 获取图片文件
+     * 读取文件
      */
-    private void getImageFile() {
-        Intent intent = getIntent();
-        imageFile = intent.getByteArrayExtra("image");
+    private void readFile() {
+        Intent intent=getIntent();
+        imagePath=intent.getStringExtra("image");
+
+        imageFile= BitmapFactory.decodeFile(imagePath);
+        ImageView imageView=(ImageView) findViewById(R.id.pre_view);
+        imageView.setImageBitmap(imageFile);
     }
+
 }

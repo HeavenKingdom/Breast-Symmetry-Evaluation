@@ -20,13 +20,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.BreastSymmetryEvaluation">
         <activity
-            android:name=".Screen.ImagePreviewScreen"
+            android:name="com.example.breast_symmetry_evaluation.Screen.ImagePreviewScreen"
             android:exported="true" />
         <activity
-            android:name=".Camera.CameraActivity"
+            android:name="com.example.breast_symmetry_evaluation.Camera.CameraActivity"
             android:exported="true" />
         <activity
-            android:name=".Screen.InfoScreen"
+            android:name="com.example.breast_symmetry_evaluation.Screen.InfoScreen"
             android:exported="true" />
 
         <meta-data

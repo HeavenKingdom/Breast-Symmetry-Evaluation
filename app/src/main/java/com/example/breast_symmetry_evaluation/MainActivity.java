@@ -196,6 +196,12 @@ public class MainActivity extends AppCompatActivity {
             Log.i(TAG, "用户未授权");
         }
     }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+    }
 }
     /*//跳转相册
     private void toPicture() {
