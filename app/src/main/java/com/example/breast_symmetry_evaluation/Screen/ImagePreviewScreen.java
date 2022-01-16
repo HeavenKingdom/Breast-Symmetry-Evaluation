@@ -12,7 +12,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.breast_symmetry_evaluation.Camera.CameraActivity;
 import com.example.breast_symmetry_evaluation.FileControl.FileControl;
+import com.example.breast_symmetry_evaluation.MainActivity;
 import com.example.breast_symmetry_evaluation.R;
 
 import java.io.File;
@@ -33,6 +35,11 @@ public class ImagePreviewScreen extends AppCompatActivity {
      */
     private String imagePath;
 
+    /**
+     * 上一层页面
+     */
+    private int front;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,8 +51,15 @@ public class ImagePreviewScreen extends AppCompatActivity {
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_image_preview_screen);
 
+        getExtra();
         readFile();
         initAction();
+    }
+
+    private void getExtra() {
+        Intent intent=getIntent();
+        imagePath=intent.getStringExtra("image");
+        front=intent.getIntExtra("front",2);
     }
 
     /**
@@ -56,7 +70,18 @@ public class ImagePreviewScreen extends AppCompatActivity {
         cancelUpLoad.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                System.out.println("取消上传");
+                if(front==1){
+                    Intent intent=new Intent(ImagePreviewScreen.this, CameraActivity.class);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
+                else{
+                    Intent intent=new Intent(ImagePreviewScreen.this, MainActivity.class);
+                    //intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -75,8 +100,7 @@ public class ImagePreviewScreen extends AppCompatActivity {
      * 读取文件
      */
     private void readFile() {
-        Intent intent=getIntent();
-        imagePath=intent.getStringExtra("image");
+
 
         imageFile= BitmapFactory.decodeFile(imagePath);
         ImageView imageView=(ImageView) findViewById(R.id.pre_view);

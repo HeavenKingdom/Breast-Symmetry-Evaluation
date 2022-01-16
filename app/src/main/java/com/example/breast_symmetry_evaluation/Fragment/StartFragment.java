@@ -148,6 +148,7 @@ public class StartFragment extends Fragment {
                         Intent intent=new Intent(getActivity(),ImagePreviewScreen.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
                         intent.putExtra("image",imagePath);
+                        intent.putExtra("front",2);
                         startActivity(intent);
 
                     } catch (Exception e) {

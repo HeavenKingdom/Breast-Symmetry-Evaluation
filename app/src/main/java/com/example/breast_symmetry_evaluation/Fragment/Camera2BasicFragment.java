@@ -64,6 +64,7 @@ import androidx.fragment.app.Fragment;
 import com.example.breast_symmetry_evaluation.Camera.AutoFitTextureView;
 import com.example.breast_symmetry_evaluation.MainActivity;
 import com.example.breast_symmetry_evaluation.R;
+import com.example.breast_symmetry_evaluation.Screen.ImagePreviewScreen;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -259,6 +260,13 @@ public class Camera2BasicFragment extends Fragment
     private File mFile;
 
     /**
+     * 文件路径
+     * Path of picture
+     */
+    private String filePath;
+
+
+    /**
      * 照片存储的回调函数 存储完成后回主页面
      * This a callback object for the {@link ImageReader}. "onImageAvailable" will be called when a
      * still image is ready to be saved.
@@ -271,7 +279,10 @@ public class Camera2BasicFragment extends Fragment
             //Toast.makeText(getActivity(), "获取结果", Toast.LENGTH_LONG).show();
             mBackgroundHandler.post(new ImageSaver(reader.acquireNextImage(), mFile));
 
-            Intent intent=new Intent(getContext(),MainActivity.class);
+            Intent intent=new Intent(getActivity(), ImagePreviewScreen.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_REORDER_TO_FRONT);
+            intent.putExtra("image",filePath);
+            intent.putExtra("front",1);
             startActivity(intent);
 
         }
@@ -468,10 +479,11 @@ public class Camera2BasicFragment extends Fragment
         super.onActivityCreated(savedInstanceState);
         System.out.println("开始创建文件");
 
-        System.out.println(getActivity().getExternalFilesDir(null)+"/pi2.jpg");
         String uuid=UUID.randomUUID().toString();
+        filePath=getActivity().getExternalFilesDir(null)+"/"+uuid+".jpg";
+        System.out.println(filePath);
 
-        mFile = new File(getActivity().getExternalFilesDir(null), "/"+uuid+".jpg");
+        mFile = new File(filePath);
         System.out.println("创建文件成功");
     }
 
