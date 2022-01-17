@@ -23,5 +23,8 @@ This project realizes the judgment and evaluation of breast symmetry by taking p
 
 - It is recommended to use the Android API 29 system to run this application.
 
-  
+**Tool Url**：
+
+- Gradle-7.2：https://gradle.org/releases/
+- Android Studio：https://developer.android.google.cn/studio/
 
